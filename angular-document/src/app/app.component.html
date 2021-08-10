@@ -1,0 +1,77 @@
+<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm container">
+  <a class="navbar-brand" href="#">
+    <img src="../assets/logo.jpg" alt="..." routerLink="home" height="40">
+  </a>
+  <nav class="nav my-2 my-md-0 mr-md-4">
+    <a  href="/document" *ngIf="isLoggedIn" class="nav-link mr-md-2"  routerLinkActive="active"  [routerLink]="['/documents']">Documents</a>
+    <a  href="/user" *ngIf="showAdminPage" class="nav-link mr-md-2" routerLink="/users" routerLinkActive="active">Users</a>
+  </nav>
+  
+  <nav class="nav my-0 ml-md-auto mr-md-3 " *ngIf="!isLoggedIn">
+    <a  href="/signin" class="nav-link btn btn-outline-primary mr-md-2"  routerLinkActive="active"  routerLink="signin">Sign in</a>
+    <a  href="/signup" class="nav-link"  routerLinkActive="active"  routerLink="signup">Sign up</a>
+  </nav>
+
+  <!-- when user isLoggedIn -->
+  <nav class="nav my-0 ml-md-auto mr-md-3" *ngIf="isLoggedIn">
+    <a  href="/profile" class="nav-link mr-md-2"  routerLinkActive="active"  routerLink="/profile">{{username}}</a>
+    <a href="" (click)="logout()" class="nav-link btn btn-outline-danger">Logout</a>
+  </nav>
+</div>
+<router-outlet></router-outlet>
+
+
+
+<div class="container ">
+
+  <footer class="footer text-center text-white border-top shadow-sm" >
+    <div class="container p-4 pb-0 ">
+      <!-- Section: Social media -->
+      <section class="mb-4">
+        <!-- Facebook -->
+        <a
+          class="btn btn-primary btn-floating m-1"
+          style="background-color: #3b5998;"
+          href="https://www.facebook.com/kieuanhtran299/"
+          role="button"
+          ><i class="fa fa-facebook-f"></i
+        ></a>
+  
+      
+  
+        <!-- Google -->
+        <a
+          class="btn btn-primary btn-floating m-1"
+          style="background-color: #dd4b39;"
+          href="kieuanhtran2909@gmail.com"
+          role="button"
+          ><i class="fa fa-google"></i
+        ></a>
+  
+        <!-- Instagram -->
+        <a
+          class="btn btn-primary btn-floating m-1"
+          style="background-color: #ac2bac;"
+          href="https://www.instagram.com/kanh2909/"
+          role="button"
+          ><i class="fa fa-instagram"></i
+        ></a>
+  
+       
+        <!-- Github -->
+        <a
+          class="btn btn-primary btn-floating m-1"
+          style="background-color: #333333;"
+          href="https://github.com/kieuanh99"
+          role="button"
+          ><i class="fa fa-github"></i
+        ></a>
+      </section>
+    </div>
+  
+    <div class="text-center text-white p-3" style="background-color:#8d448b;">
+      © 2020 Copyright: Trần Kiều Anh
+      
+    </div>
+  </footer>
+</div>

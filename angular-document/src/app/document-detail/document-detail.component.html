@@ -1,0 +1,783 @@
+<div *ngIf="showUserPage">
+  <div class="container-contact100 container" *ngIf="showReportCAR">
+    <div class="wrap-contact100">
+      <div></div>
+      <form
+        class="contact100-form validate-form"
+        name="form"
+        (ngSubmit)="onExport(form.title)"
+        #f="ngForm"
+        novalidate
+      >
+        <button
+          type="button"
+          class="contact100-back-btn mr-md-auto"
+          (click)="goBack()"
+        >
+          <span>
+            <i class="fa fa-long-arrow-left m-l-7" aria-hidden="true"></i>
+            Back
+          </span>
+        </button>
+        <span class="contact100-form-title">
+          CAUSAL ANALYSIS & RESOLUTION (CAR) REPORT
+        </span>
+
+        <span
+          class="label-input100 col-md-6 text-right mt-2"
+          style="font-size: 15px"
+          >Type of CAR</span
+        >
+
+        <div
+          class="wrap-input100-select input100-select bg1 col-lg-2 mr-md-auto"
+        >
+          <div>
+            <select
+              disabled
+              class="js-select2"
+              name="carType"
+              [(ngModel)]="form.carType"
+              #carType="ngModel"
+            >
+              <option>
+                {{ form.carType }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div class="wrap-input100 bg1">
+          <span class="label-input100">Document title</span>
+          <input
+            disabled
+            class="input100"
+            type="text"
+            name="title"
+            #title="ngModel"
+            [(ngModel)]="form.title"
+          />
+        </div>
+
+        <div class="wrap-input100 bg1 rs1-wrap-input100">
+          <span class="label-input100">Performed by </span>
+          <input
+            disabled
+            class="input100"
+            type="text"
+            name="performedBy"
+            #performedBy="ngModel"
+            [(ngModel)]="form.performedBy"
+          />
+        </div>
+
+        <div class="wrap-input100 bg1 rs1-wrap-input100">
+          <span class="label-input100">Discussed with </span>
+          <input
+            disabled
+            class="input100"
+            type="text"
+            name="discussedWith"
+            #discussedWith="ngModel"
+            [(ngModel)]="form.discussedWith"
+          />
+        </div>
+
+        <div class="wrap-input100 bg0 rs1-alert-validate">
+          <span class="label-input100">Problem Description</span>
+          <textarea
+            disabled
+            class="input100"
+            name="problemDescription"
+            #problemDescription="ngModel"
+            [(ngModel)]="form.problemDescription"
+          ></textarea>
+        </div>
+        <div class="wrap-input100 bg0 rs1-alert-validate">
+          <span class="label-input100">Impact</span>
+          <textarea
+            disabled
+            class="input100"
+            name="impact"
+            #impact="ngModel"
+            [(ngModel)]="form.impact"
+          ></textarea>
+        </div>
+        <div class="wrap-input100 bg0 rs1-alert-validate">
+          <span class="label-input100">Root Cause</span>
+          <textarea
+            disabled
+            class="input100"
+            name="rootCause"
+            #rootCause="ngModel"
+            [(ngModel)]="form.rootCause"
+          ></textarea>
+        </div>
+        <div class="wrap-input100 bg0 rs1-alert-validate">
+          <span class="label-input100">Corrective Actions</span>
+          <textarea
+            disabled
+            class="input100"
+            name="correctiveActions"
+            #correctiveActions="ngModel"
+            [(ngModel)]="form.correctiveActions"
+          ></textarea>
+        </div>
+        <span class="label-worksheet">5 WHYs Worksheet</span>
+
+        <div class="wrap-input100 bg0 rs1-alert-validate">
+          <span class="label-input100">Define the Problem</span>
+          <textarea
+            disabled
+            class="input100"
+            name="defineTheProblem"
+            #defineTheProblem="ngModel"
+            [(ngModel)]="form.defineTheProblem"
+          ></textarea>
+        </div>
+        <span class="label-why"> Why is it happening? </span>
+        <div
+          class="wrap-input100 bg0 rs1-alert-validate"
+          *ngFor="let obj of form.why; let i = index"
+        >
+          <span class="label-input100">Why is that ?</span>
+          <textarea
+            disabled
+            class="input100"
+            name="why{{ i }}"
+            #why1="ngModel"
+            [(ngModel)]="obj.why"
+          ></textarea>
+        </div>
+
+        <div class="container-contact100-form-btn">
+          <button type="submit" class="contact100-form-btn w-100">
+            <span>
+              Export
+              <i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
+            </span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Form Configuration Audit Report -->
+
+  <div class="container-contact100 container" *ngIf="showReportCA">
+    <div class="wrap-contact100">
+      <div></div>
+      <form
+        class="contact100-form validate-form"
+        name="form2"
+        (ngSubmit)="onExport(form2.title)"
+        #f2="ngForm"
+      >
+        <button
+          type="button"
+          class="contact100-back-btn mr-md-auto"
+          (click)="goBack()"
+        >
+          <span>
+            <i class="fa fa-long-arrow-left m-l-7" aria-hidden="true"></i>
+            Back
+          </span>
+        </button>
+        <span class="contact100-form-title"> Configuration Audit Report</span>
+
+        <div class="table-responsive-sm mt-4 w-100">
+          <table class="table table-bordered">
+            <thead>
+              <tr class="text-center">
+                <th class="col-1">No</th>
+                <th class="col-3">Activity</th>
+                <th class="col-3">Description</th>
+                <th class="col-3">Action item suggested</th>
+                <th class="col-2">Status(Y/N/NA)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let obj of form2.dataActivity; let i = index">
+                <td class="text-center col-1">
+                  <input
+                    disabled
+                    class="input100"
+                    type="hidden"
+                    name="no{{ i }}"
+                    [(ngModel)]="obj.no"
+                  />
+                  {{ i + 1 }}
+                </td>
+
+                <td class="col-3">
+                  <textarea
+                    disabled
+                    style="min-height: 200px"
+                    class="input100"
+                    name="activity{{ i }}"
+                    [(ngModel)]="obj.activity"
+                  ></textarea>
+                </td>
+                <td class="col-3">
+                  <textarea
+                    disabled
+                    style="min-height: 200px"
+                    class="input100"
+                    name="description{{ i }}"
+                    [(ngModel)]="obj.description"
+                  ></textarea>
+                </td>
+                <td class="col-3">
+                  <textarea
+                    disabled
+                    style="min-height: 200px"
+                    class="input100"
+                    name="actionItem{{ i }}"
+                    [(ngModel)]="obj.actionItem"
+                  ></textarea>
+                </td>
+                <td class="col-2">
+                  <div class="wrap-input100-select input100-select bg1">
+                    <div>
+                      <select
+                        disabled
+                        class="js-select2"
+                        name="status{{ i }}"
+                        [(ngModel)]="obj.status"
+                      >
+                        <option>
+                          {{ obj.status }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="wrap-input100 bg1">
+          <span class="label-input100">Document title</span>
+          <input
+            disabled
+            class="input100"
+            type="text"
+            name="titleReportCA"
+            #titleReportCA="ngModel"
+            [(ngModel)]="form2.title"
+          />
+        </div>
+        <div class="wrap-input100 bg1 rs1-wrap-input100">
+          <span class="label-input100">Project Name </span>
+          <input
+            disabled
+            class="input100"
+            type="text"
+            name="projectName"
+            #projectName="ngModel"
+            [(ngModel)]="form2.projectName"
+          />
+        </div>
+
+        <div class="wrap-input100 bg1 rs1-wrap-input100">
+          <span class="label-input100">Project ID</span>
+          <input
+            disabled
+            class="input100"
+            type="text"
+            name="projectId"
+            #projectId="ngModel"
+            [(ngModel)]="form2.projectId"
+          />
+        </div>
+        <div class="wrap-input100 bg1 rs1-wrap-input100">
+          <span class="label-input100">Audit date </span>
+          <input
+            disabled
+            class="input100"
+            type="date"
+            name="auditDate"
+            #auditDate="ngModel"
+            [(ngModel)]="form2.auditDate"
+          />
+        </div>
+
+        <div class="wrap-input100 bg1 rs1-wrap-input100">
+          <span class="label-input100">Customer</span>
+          <input
+            disabled
+            class="input100"
+            type="text"
+            name="customer"
+            #customer="ngModel"
+            [(ngModel)]="form2.customer"
+          />
+        </div>
+        <div class="wrap-input100 bg1 rs1-wrap-input100">
+          <span class="label-input100">Configurable Items </span>
+          <input
+            disabled
+            class="input100"
+            type="text"
+            name="items"
+            #items="ngModel"
+            [(ngModel)]="form2.items"
+          />
+        </div>
+
+        <div class="wrap-input100 bg1 rs1-wrap-input100">
+          <span class="label-input100">Audit Team </span>
+          <input
+            disabled
+            class="input100"
+            type="text"
+            name="auditTeam"
+            #auditTeam="ngModel"
+            [(ngModel)]="form2.auditTeam"
+          />
+        </div>
+
+        <div class="wrap-input100 bg0 rs1-alert-validate">
+          <span class="label-input100">Remarks</span>
+          <textarea
+            disabled
+            class="input100"
+            name="remarks"
+            #remarks="ngModel"
+            [(ngModel)]="form2.remarks"
+          ></textarea>
+        </div>
+
+        <div class="wrap-input100 bg1 rs1-wrap-input100">
+          <span class="label-input100" style="font-size: medium"
+            >Date :
+            {{ form2.today }}
+          </span>
+        </div>
+
+        <div class="container-contact100-form-btn">
+          <button type="submit" class="contact100-form-btn w-100">
+            <span>
+              Export
+              <i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
+            </span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="showAdminPage">
+  <div class="container-contact100 container" *ngIf="showReportCAR">
+    <div class="wrap-contact100">
+      <div></div>
+      <form
+        class="contact100-form validate-form"
+        name="form"
+        (ngSubmit)="onUpdateStatus()"
+        #f="ngForm"
+        novalidate
+      >
+        <button
+          type="button"
+          class="contact100-back-btn mr-md-auto"
+          (click)="goBack()"
+        >
+          <span>
+            <i class="fa fa-long-arrow-left m-l-7" aria-hidden="true"></i>
+            Back
+          </span>
+        </button>
+        <span class="contact100-form-title">
+          CAUSAL ANALYSIS & RESOLUTION (CAR) REPORT
+        </span>
+
+        <span
+          class="label-input100 col-md-6 text-right mt-2"
+          style="font-size: 15px"
+          >Type of CAR</span
+        >
+
+        <div
+          class="wrap-input100-select input100-select bg1 col-lg-2 mr-md-auto"
+        >
+          <div>
+            <select
+              disabled
+              class="js-select2"
+              name="carType"
+              [(ngModel)]="form.carType"
+              #carType="ngModel"
+            >
+              <option>
+                {{ form.carType }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div class="wrap-input100 bg1">
+          <span class="label-input100">Document title</span>
+          <input
+            disabled
+            class="input100"
+            type="text"
+            name="title"
+            #title="ngModel"
+            [(ngModel)]="form.title"
+          />
+        </div>
+
+        <div class="wrap-input100 bg1 rs1-wrap-input100">
+          <span class="label-input100">Performed by </span>
+          <input
+            disabled
+            class="input100"
+            type="text"
+            name="performedBy"
+            #performedBy="ngModel"
+            [(ngModel)]="form.performedBy"
+          />
+        </div>
+
+        <div class="wrap-input100 bg1 rs1-wrap-input100">
+          <span class="label-input100">Discussed with </span>
+          <input
+            disabled
+            class="input100"
+            type="text"
+            name="discussedWith"
+            #discussedWith="ngModel"
+            [(ngModel)]="form.discussedWith"
+          />
+        </div>
+
+        <div class="wrap-input100 bg0 rs1-alert-validate">
+          <span class="label-input100">Problem Description</span>
+          <textarea
+            disabled
+            class="input100"
+            name="problemDescription"
+            #problemDescription="ngModel"
+            [(ngModel)]="form.problemDescription"
+          ></textarea>
+        </div>
+        <div class="wrap-input100 bg0 rs1-alert-validate">
+          <span class="label-input100">Impact</span>
+          <textarea
+            disabled
+            class="input100"
+            name="impact"
+            #impact="ngModel"
+            [(ngModel)]="form.impact"
+          ></textarea>
+        </div>
+        <div class="wrap-input100 bg0 rs1-alert-validate">
+          <span class="label-input100">Root Cause</span>
+          <textarea
+            disabled
+            class="input100"
+            name="rootCause"
+            #rootCause="ngModel"
+            [(ngModel)]="form.rootCause"
+          ></textarea>
+        </div>
+        <div class="wrap-input100 bg0 rs1-alert-validate">
+          <span class="label-input100">Corrective Actions</span>
+          <textarea
+            disabled
+            class="input100"
+            name="correctiveActions"
+            #correctiveActions="ngModel"
+            [(ngModel)]="form.correctiveActions"
+          ></textarea>
+        </div>
+        <span class="label-worksheet">5 WHYs Worksheet</span>
+
+        <div class="wrap-input100 bg0 rs1-alert-validate">
+          <span class="label-input100">Define the Problem</span>
+          <textarea
+            disabled
+            class="input100"
+            name="defineTheProblem"
+            #defineTheProblem="ngModel"
+            [(ngModel)]="form.defineTheProblem"
+          ></textarea>
+        </div>
+        <span class="label-why"> Why is it happening? </span>
+        <div
+          class="wrap-input100 bg0 rs1-alert-validate"
+          *ngFor="let obj of form.why; let i = index"
+        >
+          <span class="label-input100">Why is that ?</span>
+          <textarea
+            disabled
+            class="input100"
+            name="why{{ i }}"
+            #why1="ngModel"
+            [(ngModel)]="obj.why"
+          ></textarea>
+        </div>
+
+        <div *ngIf="docStatus == 'NEW'" class="container-contact100-form-btn">
+          <button type="submit" class="contact100-form-btn w-100">
+            <span>
+              Confirm
+              <i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
+            </span>
+          </button>
+        </div>
+
+        <div
+          *ngIf="docStatus == 'APPROVED'"
+          class="container-contact100-form-btn"
+        >
+          <button
+            type="button"
+            class="contact100-form-btn w-100"
+            (click)="onExport(form.title)"
+          >
+            <span>
+              Export
+              <i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
+            </span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Form Configuration Audit Report -->
+
+  <div class="container-contact100 container" *ngIf="showReportCA">
+    <div class="wrap-contact100">
+      <div></div>
+      <form
+        class="contact100-form validate-form"
+        name="form2"
+        (ngSubmit)="onUpdateStatus()"
+        #f2="ngForm"
+      >
+        <button
+          type="button"
+          class="contact100-back-btn mr-md-auto"
+          (click)="goBack()"
+        >
+          <span>
+            <i class="fa fa-long-arrow-left m-l-7" aria-hidden="true"></i>
+            Back
+          </span>
+        </button>
+        <span class="contact100-form-title"> Configuration Audit Report</span>
+
+        <div class="table-responsive-sm mt-4 w-100">
+          <table class="table table-bordered">
+            <thead>
+              <tr class="text-center">
+                <th>No</th>
+                <th class="col-3">Activity</th>
+                <th class="col-3">Description</th>
+                <th class="col-3">Action item suggested</th>
+                <th>Status(Y/N/NA)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Activity 1 -->
+              <tr *ngFor="let obj of form2.dataActivity; let i = index">
+                <td class="text-center col-1">
+                  <input
+                    disabled
+                    class="input100"
+                    type="hidden"
+                    name="no{{ i }}"
+                    [(ngModel)]="obj.no"
+                  />
+                  {{ i + 1 }}
+                </td>
+
+                <td class="col-3">
+                  <textarea
+                    disabled
+                    style="min-height: 200px"
+                    class="input100"
+                    name="activity{{ i }}"
+                    placeholder="Activity"
+                    [(ngModel)]="obj.activity"
+                  ></textarea>
+                </td>
+                <td class="col-3">
+                  <textarea
+                    disabled
+                    style="min-height: 200px"
+                    class="input100"
+                    name="description{{ i }}"
+                    placeholder="Description"
+                    [(ngModel)]="obj.description"
+                  ></textarea>
+                </td>
+                <td class="col-3">
+                  <textarea
+                    disabled
+                    style="min-height: 200px"
+                    class="input100"
+                    name="actionItem{{ i }}"
+                    placeholder="Action item suggested"
+                    [(ngModel)]="obj.actionItem"
+                  ></textarea>
+                </td>
+                <td class="col-2">
+                  <div class="wrap-input100-select input100-select bg1">
+                    <div>
+                      <select
+                        disabled
+                        class="js-select2"
+                        name="status{{ i }}"
+                        [(ngModel)]="obj.status"
+                      >
+                        <option>
+                          {{ obj.status }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="wrap-input100 bg1">
+          <span class="label-input100">Document title</span>
+          <input
+            disabled
+            class="input100"
+            type="text"
+            name="titleReportCA"
+            #titleReportCA="ngModel"
+            [(ngModel)]="form2.title"
+          />
+        </div>
+        <div class="wrap-input100 bg1 rs1-wrap-input100">
+          <span class="label-input100">Project Name </span>
+          <input
+            disabled
+            class="input100"
+            type="text"
+            name="projectName"
+            placeholder="Project Name "
+            #projectName="ngModel"
+            [(ngModel)]="form2.projectName"
+          />
+        </div>
+
+        <div class="wrap-input100 bg1 rs1-wrap-input100">
+          <span class="label-input100">Project ID</span>
+          <input
+            disabled
+            class="input100"
+            type="text"
+            name="projectId"
+            placeholder="Project ID "
+            #projectId="ngModel"
+            [(ngModel)]="form2.projectId"
+          />
+        </div>
+        <div class="wrap-input100 bg1 rs1-wrap-input100">
+          <span class="label-input100">Audit date </span>
+          <input
+            disabled
+            class="input100"
+            type="date"
+            name="auditDate"
+            placeholder="Audit date "
+            #auditDate="ngModel"
+            [(ngModel)]="form2.auditDate"
+            max="2021-07-30"
+          />
+        </div>
+
+        <div class="wrap-input100 bg1 rs1-wrap-input100">
+          <span class="label-input100">Customer</span>
+          <input
+            disabled
+            class="input100"
+            type="text"
+            name="customer"
+            placeholder="Customer "
+            #customer="ngModel"
+            [(ngModel)]="form2.customer"
+          />
+        </div>
+        <div class="wrap-input100 bg1 rs1-wrap-input100">
+          <span class="label-input100">Configurable Items </span>
+          <input
+            disabled
+            class="input100"
+            type="text"
+            name="items"
+            placeholder="Configurable Items "
+            #items="ngModel"
+            [(ngModel)]="form2.items"
+          />
+        </div>
+
+        <div class="wrap-input100 bg1 rs1-wrap-input100">
+          <span class="label-input100">Audit Team </span>
+          <input
+            disabled
+            class="input100"
+            type="text"
+            name="auditTeam"
+            placeholder="Audit Team "
+            #auditTeam="ngModel"
+            [(ngModel)]="form2.auditTeam"
+          />
+        </div>
+
+        <div class="wrap-input100 bg0 rs1-alert-validate">
+          <span class="label-input100">Remarks</span>
+          <textarea
+            disabled
+            class="input100"
+            name="remarks"
+            placeholder="Remarks here"
+            #remarks="ngModel"
+            [(ngModel)]="form2.remarks"
+          ></textarea>
+        </div>
+
+        <div class="wrap-input100 bg1 rs1-wrap-input100">
+          <span class="label-input100" style="font-size: medium"
+            >Date :
+            {{ form2.today }}
+          </span>
+        </div>
+
+        <div *ngIf="docStatus == 'NEW'" class="container-contact100-form-btn">
+          <button type="submit" class="contact100-form-btn w-100">
+            <span>
+              Confirm
+              <i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
+            </span>
+          </button>
+        </div>
+
+        <div
+          *ngIf="docStatus == 'APPROVED'"
+          class="container-contact100-form-btn"
+        >
+          <button
+            type="button"
+            class="contact100-form-btn w-100"
+            (click)="onExport(form2.title)"
+          >
+            <span>
+              Export
+              <i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
+            </span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

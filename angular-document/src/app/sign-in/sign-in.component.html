@@ -1,0 +1,100 @@
+<section class="ftco-section">
+  <div class="container">
+    <div class="row justify-content-center mb-5"></div>
+    <div class="row justify-content-center">
+      <div class="col-md-6 col-lg-5">
+        <div class="login-wrap p-4 p-md-5">
+          <div class="icon d-flex align-items-center justify-content-center">
+            <span class="fa fa-user-o"></span>
+          </div>
+          <a class="nav-link text-center mb-4 h5"> SIGN IN </a>
+
+          <form
+            *ngIf="!isLoggedIn"
+            name="form"
+            (ngSubmit)="f.form.valid && onSubmit()"
+            #f="ngForm"
+            novalidate
+          >
+            <div class="form-group">
+              <input
+                placeholder="User Name Or Email"
+                type="text"
+                class="form-control"
+                name="usernameOrEmail"
+                minlength="4"
+                [(ngModel)]="form.usernameOrEmail"
+                required
+                #usernameOrEmail="ngModel"
+              />
+
+              <div
+                class="alert alert-danger"
+                role="alert"
+                *ngIf="f.submitted && usernameOrEmail.invalid"
+              >
+                <div *ngIf="usernameOrEmail.errors!.required">
+                  Username or Email is required!
+                </div>
+                <div *ngIf="usernameOrEmail.errors!.minlength">
+                  Username or Email must be at least 4 characters
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <input
+                type="password"
+                class="form-control"
+                name="password"
+                [(ngModel)]="form.password"
+                required
+                minlength="7"
+                #password="ngModel"
+                placeholder="Password"
+              />
+
+              <div
+                class="alert alert-danger"
+                role="alert"
+                *ngIf="f.submitted && password.invalid"
+              >
+                <div *ngIf="password.errors!.required">
+                  Password is required!
+                </div>
+                <div *ngIf="password.errors!.minlength">
+                  Password must be at least 7 characters
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <button type="submit" class="btn btn-primary p-3 w-100">
+                Sign in
+              </button>
+            </div>
+            <div class="form-group">
+              <div
+                class="alert alert-danger"
+                role="alert"
+                *ngIf="f.submitted && isLoginFailed"
+              >
+                {{ errorMessage }}
+              </div>
+            </div>
+
+            <div class="form-group">
+              <a
+                style="font-size: 17px"
+                class="nav-link text-center"
+                routerLink="/signup"
+              >
+                Don't have an account? Sign up
+              </a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<router-outlet></router-outlet>

@@ -1,0 +1,46 @@
+<div class="container d-flex flex-column text-center" *ngIf="showAdminPage">
+  <h4 class="font-weight-normal mr-md-auto">Documents Version Management</h4>
+  <div class="row">
+    <div class="row searchFilter">
+      <div class="col-sm-12 ml-md-3">
+        <div class="input-group">
+          <input
+            id="table_filter"
+            placeholder="Search by username..."
+            type="text"
+            class="form-control"
+            [(ngModel)]="name"
+            (input)="search()"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="table-responsive-sm mt-4 w-100">
+      <table class="table table-bordered">
+        <thead>
+          <tr class="text-center">
+            <th>No.</th>
+            <th class="col-3">User Name</th>
+            <th>User ID</th>
+            <th>Email Address</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="
+              let user of users | paginate: { itemsPerPage: 5, currentPage: p };
+              let i = index
+            "
+          >
+            <td class="text-center">{{ i + 1 }}</td>
+            <td class="col-3 text-center">{{ user.username }}</td>
+            <td class="text-center">{{ user.id }}</td>
+            <td class="text-center">{{ user.email }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
+    </div>
+  </div>
+</div>

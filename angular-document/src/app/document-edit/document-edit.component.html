@@ -1,0 +1,491 @@
+<div class="container-contact100 container" *ngIf="showReportCAR">
+  <div class="wrap-contact100">
+    <div></div>
+    <form
+      class="contact100-form validate-form"
+      name="form"
+      (ngSubmit)="f.form.valid && onUpdate()"
+      #f="ngForm"
+      novalidate
+    >
+      <button
+        type="button"
+        class="contact100-back-btn mr-md-auto"
+        (click)="goBack()"
+      >
+        <span>
+          <i class="fa fa-long-arrow-left m-l-7" aria-hidden="true"></i>
+          Back
+        </span>
+      </button>
+      <span class="contact100-form-title">
+        CAUSAL ANALYSIS & RESOLUTION (CAR) REPORT
+      </span>
+
+      <span
+        class="label-input100 col-md-6 text-right mt-2"
+        style="font-size: 15px"
+        >Type of CAR</span
+      >
+
+      <div class="wrap-input100-select input100-select bg1 col-lg-2 mr-md-auto">
+        <div>
+          <select
+            class="js-select2"
+            name="carType"
+            [(ngModel)]="form.carType"
+            #carType="ngModel"
+          >
+            <option *ngFor="let selectType of typeOfCar">
+              {{ selectType }}
+            </option>
+          </select>
+          <div class="dropDownSelect2"></div>
+        </div>
+      </div>
+
+      <div class="wrap-input100 bg1">
+        <span class="label-input100">Document title</span>
+        <input
+          class="input100"
+          type="text"
+          name="title"
+          placeholder="Enter Document Title"
+          required
+          maxlength="500"
+          #title="ngModel"
+          [(ngModel)]="form.title"
+        />
+
+        <div
+          class="alert alert-danger"
+          role="alert"
+          *ngIf="f.submitted && title.invalid"
+        >
+          <div *ngIf="title.errors!.required">Document title is required!</div>
+
+          <div *ngIf="title.errors!.maxlength">
+            Document title should not exceed the max length than 20 characters
+          </div>
+        </div>
+      </div>
+
+      <div class="wrap-input100 bg1 rs1-wrap-input100">
+        <span class="label-input100">Performed by </span>
+        <input
+          class="input100"
+          type="text"
+          name="performedBy"
+          placeholder="Name... "
+          #performedBy="ngModel"
+          [(ngModel)]="form.performedBy"
+        />
+      </div>
+
+      <div class="wrap-input100 bg1 rs1-wrap-input100">
+        <span class="label-input100">Discussed with </span>
+        <input
+          class="input100"
+          type="text"
+          name="discussedWith"
+          placeholder="Sr. management during … meeting "
+          #discussedWith="ngModel"
+          [(ngModel)]="form.discussedWith"
+        />
+      </div>
+
+      <div class="wrap-input100 bg0 rs1-alert-validate">
+        <span class="label-input100">Problem Description</span>
+        <textarea
+          class="input100"
+          name="problemDescription"
+          placeholder="Problem Description"
+          #problemDescription="ngModel"
+          [(ngModel)]="form.problemDescription"
+        ></textarea>
+      </div>
+      <div class="wrap-input100 bg0 rs1-alert-validate">
+        <span class="label-input100">Impact</span>
+        <textarea
+          class="input100"
+          name="impact"
+          placeholder="Impact"
+          #impact="ngModel"
+          [(ngModel)]="form.impact"
+        ></textarea>
+      </div>
+      <div class="wrap-input100 bg0 rs1-alert-validate">
+        <span class="label-input100">Root Cause</span>
+        <textarea
+          class="input100"
+          name="rootCause"
+          placeholder="Root Cause"
+          #rootCause="ngModel"
+          [(ngModel)]="form.rootCause"
+        ></textarea>
+      </div>
+      <div class="wrap-input100 bg0 rs1-alert-validate">
+        <span class="label-input100">Corrective Actions</span>
+        <textarea
+          class="input100"
+          name="correctiveActions"
+          placeholder="Corrective Actions"
+          #correctiveActions="ngModel"
+          [(ngModel)]="form.correctiveActions"
+        ></textarea>
+      </div>
+      <span class="label-worksheet">5 WHYs Worksheet</span>
+
+      <div class="wrap-input100 bg0 rs1-alert-validate">
+        <span class="label-input100">Define the Problem</span>
+        <textarea
+          class="input100"
+          name="defineTheProblem"
+          placeholder="Define the Problem:"
+          #defineTheProblem="ngModel"
+          [(ngModel)]="form.defineTheProblem"
+        ></textarea>
+      </div>
+      <span class="label-why"> Why is it happening? </span>
+      <div
+        class="wrap-input100 bg0 rs1-alert-validate"
+        *ngFor="let obj of form.why; let i = index"
+      >
+        <span class="label-input100">Why is that ?</span>
+        <textarea
+          class="input100"
+          name="why{{ i }}"
+          placeholder="Why?"
+          required
+          #why1="ngModel"
+          [(ngModel)]="obj.why"
+        ></textarea>
+        <div
+          class="alert alert-danger"
+          role="alert"
+          *ngIf="f.submitted && why1.invalid"
+        >
+          <div *ngIf="why1.errors!.required">Cause is required!</div>
+        </div>
+        <div class="form-group col-md-1 ml-md-auto" *ngIf="i != 0">
+          <button
+            type="button"
+            (click)="removeFormWhy(i)"
+            class="btn btn-danger"
+          >
+            -
+          </button>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <button type="button" (click)="addFormWhy()" class="btn btn-success">
+          +
+        </button>
+      </div>
+
+      <div
+        class="alert alert-danger col-md-12 text-center"
+        role="alert"
+        *ngIf="f.submitted && isUpdateFailed"
+      >
+        {{ errorMessage }}
+      </div>
+      <div class="container-contact100-form-btn">
+        <button type="submit" class="contact100-form-btn col-md-4">
+          <span>
+            Update
+            <i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
+          </span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Form Configuration Audit Report -->
+
+<div class="container-contact100 container" *ngIf="showReportCA">
+  <div class="wrap-contact100">
+    <div></div>
+    <form
+      class="contact100-form validate-form"
+      name="form2"
+      (ngSubmit)="f2.form.valid && onUpdateCA()"
+      #f2="ngForm"
+      novalidate
+    >
+      <button
+        type="button"
+        class="contact100-back-btn mr-md-auto"
+        (click)="goBack()"
+      >
+        <span>
+          <i class="fa fa-long-arrow-left m-l-7" aria-hidden="true"></i>
+          Back
+        </span>
+      </button>
+      <span class="contact100-form-title"> Configuration Audit Report</span>
+
+      <div class="table-responsive-sm mt-4 w-100">
+        <table class="table table-bordered">
+          <thead>
+            <tr class="text-center">
+              <th class="col-1">No</th>
+              <th class="col-3">Activity</th>
+              <th class="col-3">Description</th>
+              <th class="col-3">Action item suggested</th>
+              <th class="col-2">Status(Y/N/NA)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let obj of form2.dataActivity; let i = index">
+              <td class="text-center">
+                <input
+                  class="input100"
+                  type="hidden"
+                  name="no{{ i }}"
+                  [(ngModel)]="obj.no"
+                />
+                {{ i + 1 }}
+              </td>
+
+              <td class="col-3">
+                <textarea
+                  style="min-height: 200px"
+                  class="input100"
+                  name="activity{{ i }}"
+                  placeholder="Activity"
+                  required
+                  #activity1="ngModel"
+                  [(ngModel)]="obj.activity"
+                ></textarea>
+                <div
+                  class="alert alert-danger"
+                  role="alert"
+                  *ngIf="f2.submitted && activity1.invalid"
+                >
+                  <div *ngIf="activity1.errors!.required">
+                    Activity is required!
+                  </div>
+                </div>
+              </td>
+              <td class="col-3">
+                <textarea
+                  style="min-height: 200px"
+                  class="input100"
+                  name="description{{ i }}"
+                  placeholder="Description"
+                  required
+                  #description1="ngModel"
+                  [(ngModel)]="obj.description"
+                ></textarea>
+                <div
+                  class="alert alert-danger"
+                  role="alert"
+                  *ngIf="f2.submitted && description1.invalid"
+                >
+                  <div *ngIf="description1.errors!.required">
+                    Description is required!
+                  </div>
+                </div>
+              </td>
+              <td class="col-3">
+                <textarea
+                  style="min-height: 200px"
+                  class="input100"
+                  name="actionItem{{ i }}"
+                  placeholder="Action item suggested"
+                  required
+                  #actionItem1="ngModel"
+                  [(ngModel)]="obj.actionItem"
+                ></textarea>
+                <div
+                  class="alert alert-danger"
+                  role="alert"
+                  *ngIf="f2.submitted && actionItem1.invalid"
+                >
+                  <div *ngIf="actionItem1.errors!.required">
+                    Suggest is required!
+                  </div>
+                </div>
+              </td>
+              <td class="col-2">
+                <div class="wrap-input100-select input100-select bg1">
+                  <div>
+                    <select
+                      class="js-select2"
+                      name="status{{ i }}"
+                      [(ngModel)]="obj.status"
+                      required
+                      #status1="ngModel"
+                    >
+                      <option *ngFor="let selectStatus of statusReport">
+                        {{ selectStatus }}
+                      </option>
+                    </select>
+                    <div class="dropDownSelect2"></div>
+                    <div
+                      class="alert alert-danger"
+                      role="alert"
+                      *ngIf="f2.submitted && status1.invalid"
+                    >
+                      <div *ngIf="status1.errors!.required">
+                        Status required
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </td>
+              <div class="form-group col-md-1" *ngIf="i != 0">
+                <button
+                  type="button"
+                  (click)="removeFormActivity(i)"
+                  class="btn btn-danger"
+                >
+                  -
+                </button>
+              </div>
+            </tr>
+            <div class="form-group">
+              <button
+                type="button"
+                (click)="addFormActivity()"
+                class="btn btn-success"
+              >
+                +
+              </button>
+            </div>
+          </tbody>
+        </table>
+      </div>
+      <div class="wrap-input100 bg1">
+        <span class="label-input100">Document title</span>
+        <input
+          class="input100"
+          type="text"
+          name="title"
+          placeholder="Enter Document Title"
+          required
+          maxlength="500"
+          #title="ngModel"
+          [(ngModel)]="form2.title"
+        />
+
+        <div
+          class="alert alert-danger"
+          role="alert"
+          *ngIf="f2.submitted && title.invalid"
+        >
+          <div *ngIf="title.errors!.required">Document title is required!</div>
+
+          <div *ngIf="title.errors!.maxlength">
+            Document title should not exceed the max length than 20 characters
+          </div>
+        </div>
+      </div>
+      <div class="wrap-input100 bg1 rs1-wrap-input100">
+        <span class="label-input100">Project Name </span>
+        <input
+          class="input100"
+          type="text"
+          name="projectName"
+          placeholder="Project Name "
+          [(ngModel)]="form2.projectName"
+        />
+      </div>
+
+      <div class="wrap-input100 bg1 rs1-wrap-input100">
+        <span class="label-input100">Project ID</span>
+        <input
+          class="input100"
+          type="text"
+          name="projectId"
+          placeholder="Project ID "
+          [(ngModel)]="form2.projectId"
+        />
+      </div>
+      <div class="wrap-input100 bg1 rs1-wrap-input100">
+        <span class="label-input100">Audit date </span>
+        <input
+          class="input100"
+          type="date"
+          name="auditDate"
+          placeholder="Audit date "
+          [(ngModel)]="form2.auditDate"
+          max="2021-07-30"
+        />
+      </div>
+
+      <div class="wrap-input100 bg1 rs1-wrap-input100">
+        <span class="label-input100">Customer</span>
+        <input
+          class="input100"
+          type="text"
+          name="customer"
+          placeholder="Customer "
+          [(ngModel)]="form2.customer"
+        />
+      </div>
+      <div class="wrap-input100 bg1 rs1-wrap-input100">
+        <span class="label-input100">Configurable Items </span>
+        <input
+          class="input100"
+          type="text"
+          name="items"
+          placeholder="Configurable Items "
+          [(ngModel)]="form2.items"
+        />
+      </div>
+
+      <div class="wrap-input100 bg1 rs1-wrap-input100">
+        <span class="label-input100">Audit Team </span>
+        <input
+          class="input100"
+          type="text"
+          name="auditTeam"
+          placeholder="Audit Team "
+          [(ngModel)]="form2.auditTeam"
+        />
+      </div>
+
+      <div class="wrap-input100 bg0 rs1-alert-validate">
+        <span class="label-input100">Remarks</span>
+        <textarea
+          class="input100"
+          name="remarks"
+          placeholder="Remarks here"
+          [(ngModel)]="form2.remarks"
+        ></textarea>
+      </div>
+
+      <div class="wrap-input100 bg1 rs1-wrap-input100">
+        <span class="label-input100" style="font-size: medium"
+          >Date : {{ form2.today }}
+        </span>
+        <input
+          class="input100"
+          type="hidden"
+          name="today"
+          [(ngModel)]="form2.today"
+        />
+      </div>
+      <div
+        class="alert alert-danger col-md-12 text-center"
+        role="alert"
+        *ngIf="f2.submitted && isUpdateFailed"
+      >
+        {{ errorMessage }}
+      </div>
+
+      <div class="container-contact100-form-btn">
+        <button type="submit" class="contact100-form-btn col-md-4">
+          <span>
+            Update
+            <i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
+          </span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

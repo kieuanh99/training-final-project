@@ -1,0 +1,16 @@
+.filter {
+  border: 2px solid black;
+  border-radius: 20px;
+  padding: 6px 20px;
+}
+
+.my-select {
+  border: 2px solid black;
+  border-radius: 20px;
+  padding: 6px 20px;
+}
+
+button.close {
+  border: none;
+  outline: none;
+}

@@ -1,0 +1,284 @@
+<div class="container d-flex flex-column text-center" *ngIf="showUserPage">
+  <h4 class="font-weight-normal mr-md-auto">Documents Management</h4>
+  <div class="row">
+    <div class="row searchFilter">
+      <div class="col-sm-12 ml-md-3">
+        <div class="input-group">
+          <input
+            id="table_filter"
+            placeholder="Search by title..."
+            type="text"
+            class="form-control"
+            [(ngModel)]="name"
+            (input)="search()"
+          />
+          <div class="input-group-btn">
+            <button type="button" class="btn btn-default">
+              <span class="label-icon">Filter by</span>
+              <span class="caret">&nbsp;</span>
+            </button>
+
+            <select
+              class="filter"
+              [(ngModel)]="typeSelected"
+              (ngModelChange)="onFilter($event)"
+            >
+              <option>All</option>
+              <option [value]="btn" *ngFor="let btn of types">{{ btn }}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="my-0 ml-md-auto mr-md-3">
+      <button
+        class="btn btn-info"
+        data-toggle="modal"
+        data-target="#createModal"
+        data-backdrop="true"
+      >
+        Create A Document
+      </button>
+    </div>
+    <div
+      class="modal fade text-center"
+      id="createModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="createModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title text-dark" id="createModalLabel">
+              Select the document type you wish to create
+            </h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body col-md-9">
+            <select class="custom-select my-select" [(ngModel)]="chooseType">
+              <option *ngFor="let selectType of typeDoc" name="selectType">
+                {{ selectType }}
+              </option>
+            </select>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">
+              Cancel
+            </button>
+            <button
+              *ngIf="chooseType == null"
+              disabled
+              type="button"
+              class="btn btn-info modal-close"
+              data-dismiss="modal"
+              (click)="openTemplate(chooseType)"
+            >
+              Create
+            </button>
+            <button
+              *ngIf="chooseType != null"
+              type="button"
+              class="btn btn-info modal-close"
+              data-dismiss="modal"
+              (click)="openTemplate(chooseType)"
+            >
+              Create
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="table-responsive-sm mt-4 w-100">
+    <table class="table table-bordered">
+      <thead>
+        <tr class="text-center">
+          <th>No.</th>
+          <th class="col-2">Type</th>
+          <th class="col-3">Title</th>
+          <th>Updated</th>
+          <th>Status</th>
+          <th class="col-4">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="
+            let doc of documents
+              | paginate: { itemsPerPage: 5, currentPage: p };
+            let i = index
+          "
+        >
+          <td class="text-center">{{ i + 1 }}</td>
+          <td class="col-2">{{ doc.type }}</td>
+          <td class="col-3">{{ doc.title }}</td>
+          <td class="text-center">{{ doc.updated | date: "mediumDate" }}</td>
+          <td class="text-center">{{ doc.status }}</td>
+          <td class="col-4 text-center">
+            <button
+              class="btn btn-light btn-sm mr-1 col-md-4 col-lg-2"
+              [routerLink]="['/viewDocument', doc.id]"
+            >
+              View
+            </button>
+            <button
+              [disabled]="doc.status == 'APPROVED'"
+              class="btn btn-info btn-sm mr-1 col-md-4 col-lg-2"
+              [routerLink]="['/updateDocument', doc.id]"
+            >
+              Edit
+            </button>
+
+            <button
+              type="button"
+              class="btn btn-danger btn-sm mr-1 col-md-4 col-lg-2"
+              (click)="openModalDel(content, doc.id)"
+              href="javascript:void(0);"
+            >
+              Delete
+            </button>
+
+            <button
+              type="button"
+              class="btn btn-secondary btn-sm col-md-4 col-lg-2"
+              (click)="exportDocument(doc.id, doc.title)"
+            >
+              Export
+            </button>
+          </td>
+
+          <ng-template #content let-c="close" let-d="dismiss">
+            <div class="modal-content w-100">
+              <div class="modal-header">
+                <h5 class="modal-title text-danger" id="deleteModalLabel">
+                  Warning
+                </h5>
+                <button
+                  type="button"
+                  class="close"
+                  (click)="d()"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">Are you sure to delete this version?</div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-danger" (click)="d()">
+                  No
+                </button>
+                <button
+                  type="button"
+                  id="closemodal"
+                  class="btn btn-info"
+                  (click)="c('yes')"
+                >
+                  Yes
+                </button>
+              </div>
+            </div>
+          </ng-template>
+        </tr>
+      </tbody>
+    </table>
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+  </div>
+</div>
+
+<div class="container d-flex flex-column text-center" *ngIf="showAdminPage">
+  <h4 class="font-weight-normal mr-md-auto">Documents Management</h4>
+  <div class="row">
+    <div class="row searchFilter">
+      <div class="col-sm-12 ml-md-3">
+        <div class="input-group">
+          <input
+            id="table_filter"
+            placeholder="Search by title..."
+            type="text"
+            class="form-control"
+            [(ngModel)]="name"
+            (input)="search()"
+          />
+          <div class="input-group-btn">
+            <button type="button" class="btn btn-default">
+              <span class="label-icon">Filter by</span>
+              <span class="caret">&nbsp;</span>
+            </button>
+
+            <select
+              class="filter"
+              [(ngModel)]="typeSelected"
+              (ngModelChange)="onFilter($event)"
+            >
+              <option>All</option>
+              <option [value]="btn" *ngFor="let btn of types">{{ btn }}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="table-responsive-sm mt-4 w-100">
+      <table class="table table-bordered">
+        <thead>
+          <tr class="text-center">
+            <th>No.</th>
+            <th class="col-2">Type</th>
+            <th class="col-3">Title</th>
+            <th>User</th>
+            <th>Updated</th>
+            <th>Status</th>
+            <th class="col-3">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="
+              let doc of documents
+                | paginate: { itemsPerPage: 5, currentPage: p };
+              let i = index
+            "
+          >
+            <td class="text-center">{{ i + 1 }}</td>
+            <td class="col-2">{{ doc.type }}</td>
+            <td class="col-3">{{ doc.title }}</td>
+            <td class="text-center">{{ doc.userId }}</td>
+            <td class="text-center">{{ doc.updated | date: "mediumDate" }}</td>
+            <td class="text-center">{{ doc.status }}</td>
+            <td class="col-3 text-center">
+              <button
+                class="btn btn-light btn-sm mr-1 col-md-4 col-lg-3"
+                [routerLink]="['/viewDocument', doc.id]"
+              >
+                View
+              </button>
+
+              <button
+                type="button"
+                class="btn btn-secondary btn-sm col-md-4 col-lg-3"
+                (click)="exportDocument(doc.id, doc.title)"
+                data-toggle="modal"
+                data-target="#exportModal"
+                data-backdrop="true"
+              >
+                Export
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
+    </div>
+  </div>
+</div>
