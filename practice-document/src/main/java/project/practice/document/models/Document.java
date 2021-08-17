@@ -30,9 +30,8 @@ public class Document {
     @Size(max = 500)
     private String title;
 
-    @ManyToOne
-    @JoinColumn(name = "userId")
-    private User user;
+    @NotBlank
+    private Long userId;
 
     @NotBlank
     @Column(name="updated")
@@ -70,12 +69,12 @@ public class Document {
         this.title = title;
     }
 
-    public User getUser() {
-        return user;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public Date getUpdated() {
